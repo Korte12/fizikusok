@@ -1,0 +1,30 @@
+table td,th{
+    border: black 1px solid;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: aqua;
+}
+
+tbody tr:nth-child(even) {
+    background-color: skyblue; 
+}
+
+
+tbody tr:nth-child(odd) {
+    background-color: beige;
+}
+
+
+table th, table td {
+    text-align: center;
+}
+
+.error{
+    color: red;
+    border: black 1px solid;
+}
