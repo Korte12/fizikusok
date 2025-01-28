@@ -56,6 +56,10 @@ table.appendChild(tbody) //Hozzá appendelem a táblázathoz
 
 generateHeader() //Meghivom a header függvényt
 
+/**
+* Ezzel a függvényel táblázatunkat hozzuk létre
+* 
+*/
 function renderTable(){ //Elkezdem megírni a renderTable függvényt
     tbody.innerHTML = ''; // tbody innerHtml-je üres string
 
@@ -88,7 +92,10 @@ function renderTable(){ //Elkezdem megírni a renderTable függvényt
         }
     }
 }
-
+/**
+* Ezzel a függvényel azt ellenőrizzük hogy egy adott input mező üres e
+* 
+*/
 function ValidateField(inputElement, ErrorMessage){//Függvényt definiálunk
     let valid = true;//A valid értéke igaz
     if(inputElement.value === ""){//Ha az inputElement üres
@@ -101,7 +108,10 @@ function ValidateField(inputElement, ErrorMessage){//Függvényt definiálunk
     }
     return valid //Valid értékkel térek vissza
 }
-
+/**
+* Ezzel a függvényel azt ellenőrizzük hogy két mezőből bármelyik üres e
+* 
+*/
 function ValidateField2(firstElement, secondElement, ErrorMessage){ //Függvényt definiálunk
     let valid = true //A valid értéke igaz
     if(firstElement.value != "" && !ValidateField(secondElement, ErrorMessage)){ // Ellenőrizzük hogy a két mező közül az egyik kivan e töltve és ha igen akkor a másik mezőt validáljuk
@@ -113,8 +123,12 @@ function ValidateField2(firstElement, secondElement, ErrorMessage){ //Függvény
     return valid //A valid értékkel térünk vissza
 }
 
-renderTable() //Meghivom a renderTable függvényt és az array paramétert fogja kapni
+renderTable() //Meghivom a renderTable függvényt
 
+/**
+* Ezzel a függvényel a fejlécet generáljuk le
+* 
+*/
 function generateHeader(){ //Függvényt definiálunk
     const thead = document.createElement('thead'); //Létrehozok egy thead elemet
     table.appendChild(thead);//Hozzá appendelem a táblázathoz
@@ -134,6 +148,10 @@ function generateHeader(){ //Függvényt definiálunk
         }
      
     }
+/**
+* Ezzel a függvényel a formunkat generáljuk le
+* 
+*/
     function generateForm(formD){  //Függvényt definiálunk
         const form = document.createElement('form') //Létrehozom a formot
         document.body.appendChild(form) //Hozzá appendelem a body-hoz
