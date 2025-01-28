@@ -68,6 +68,30 @@ function renderTable(){ //Elkezdem megírni a renderTable függvényt
     }
 }
 
+function ValidateField(inputElement, ErrorMessage){//Függvényt definiálunk
+    let valid = true;//A valid értéke igaz
+    if(inputElement.value === ""){//Ha az inputElement üres
+        const parentElement = inputElement.parentElement //Az inputElement szülő elemét hozzá rendeljük a parentElementhez
+        const error = parentElement.querySelector(".error"); // Megkeressük az első elemet amin rajta van az error
+        if(error) { //Ha az error
+            error.innerHTML = ErrorMessage; // Kiirjuk a hibaüzenetet
+        }
+        valid = false // A valid változó értékét hamisra cseréljük
+    }
+    return valid //Valid értékkel térek vissza
+}
+
+function ValidateField2(firstElement, secondElement, ErrorMessage){ //Függvényt definiálunk
+    let valid = true //A valid értéke igaz
+    if(firstElement.value != "" && !ValidateField(secondElement, ErrorMessage)){ // Ellenőrizzük hogy a két mező közül az egyik kivan e töltve és ha igen akkor a másik mezőt validáljuk
+        valid = false //A valid értéke hamis
+    }
+    if(secondElement.value != "" && !ValidateField(firstElement, ErrorMessage)){ // Ellenőrizzük hogy a két mező közül az egyik kivan e töltve és ha igen akkor a másik mezőt validáljuk
+        valid = false //A valid értéke hamis
+    }
+    return valid //A valid értékkel térünk vissza
+}
+
 renderTable() //Meghivom a renderTable függvényt és az array paramétert fogja kapni
 
 function generateHeader(){ //Függvényt definiálunk
@@ -75,14 +99,14 @@ function generateHeader(){ //Függvényt definiálunk
     table.appendChild(thead);//Hozzá appendelem a táblázathoz
     const tr = document.createElement('tr');//Létrehozok egy sor elemet
 
-    const headerW = ["Fizika területe", "Időszak", "Képviselők"];
+    const headerW = ["Fizika területe", "Időszak", "Képviselők"]; //Létrehozom a header tömböt
     thead.appendChild(tr);//Hozzá appendelem a fej részhez
 
     for (let i = 0; i < headerW.length; i++) { // Végigiterálunk a headerW tömb elemein
         const th = document.createElement('th'); //Létrehozok egy th-t
         th.innerHTML = headerW[i]; //A th innerHTML-je lesz az aktuális headerW elem értéke
 
-        if (i === 2) { // Hogyha az i megyezik kettővel (harmadik oszlop)
+        if (i === 2) { // Hogyha az i egyenlő kettővel (harmadik oszlop)
             th.colSpan = 2; // Beállítjuk a colspan értékét 2-re
         }
             tr.appendChild(th) //Hozzá appendeljük a sorhoz a th-t
@@ -104,15 +128,51 @@ form.addEventListener('submit', function(e){//Eseménykezelőt adok a form-hoz
     const tudos2V = tudos2H.value///Eltárolom egy változóban az értéket
 
     const thisForm = e.currentTarget //Az aktuális form
+    const errorElements = thisForm.querySelectorAll('.error') //Errorokat eltárolom egy változóban
 
+    for(const i of errorElements){ //Végigmegyek az errorokon és "" ra állitom az értéküket
+        i.innerHTML = ""
+    }
+
+    let valid = true; // A valid változó értéke igaz
+
+    if(!ValidateField(teruletH, "A mező kitöltése kötelező!")){ //Ha a függvényünk hamissal tér vissza akkor kiirja az error üzenetet
+        valid = false; //A valid értéke hamis lesz
+    }
+
+    if(!ValidateField(idoH, "A mező kitöltése kötelező!")){ //Ha a függvényünk hamissal tér vissza akkor kiirja az error üzenetet
+        valid = false; //A valid értéke hamis lesz
+    }
+
+    if(!ValidateField(tudos1H, "A mező kitöltése kötelező!")){ //Ha a függvényünk hamissal tér vissza akkor kiirja az error üzenetet
+        valid = false; //A valid értéke hamis lesz
+    }
+
+    if(!ValidateField2(tudos1H, tudos2H, "A mező kitöltése kötelező!")){ //Ha a függvényünk hamissal tér vissza akkor kiirja az error üzenetet
+        valid = false;//A valid értéke hamis lesz
+    }
+
+if(valid){ //Ha valid
+    if(tudos1V === "" && tudos2V === ""){ //Ha tudos1 es tudos2 üres
     const new_person = { //Létrehozok egy új elemet
         terulet: teruletV, //Értéket adok
         ido: idoV,//Értéket adok
         tudos: tudos1V,//Értéket adok
-        tudos2: tudos2V,//Értéket adok
     }
     
     array.push(new_person)//Hozzárakom az arrayhez az új elemet
+
+    }
+    else {
+        const new_person = { //Létrehozok egy új elemet
+            terulet: teruletV, //Értéket adok
+            ido: idoV,//Értéket adok
+            tudos: tudos1V,//Értéket adok
+            tudos2: tudos2V,//Értéket adok
+        }
+    array.push(new_person)//Hozzárakom az arrayhez az új elemet
+    }
+}
     thisForm.reset()//thisFormot vagyis a táblázatunkat resetelem
     renderTable();//Meghivom a renderTable függvényt mégegyszer
 })
