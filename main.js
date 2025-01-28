@@ -27,6 +27,27 @@ const array = [
     }
 ]
 
+const formL = [// A tömb létehozása
+    {// A tömb első elemét létrehozom
+        label: "Terület megnevezése:",//Értékadás
+        id: "fizika",//Értékadás
+    },
+    {// A tömb második elemét létrehozom
+        label: "Időszak:",//Értékadás
+        id: "ido",//Értékadás
+    },
+    {// A tömb harmadik elemét létrehozom
+        label: "Első tudós:",//Értékadás
+        id: "tudos1"//Értékadás
+    },
+    {// A tömb negyedik elemét létrehozom
+        label: "Második tudós:",//Értékadás
+        id: "tudos2",//Értékadás
+    }
+]
+
+generateForm(formL) //Meghivom a függvényt
+
 const table = document.createElement('table'); //Létrehozom a table-t
 document.body.appendChild(table);//Hozzá appendelem a body-hoz
 
@@ -113,7 +134,49 @@ function generateHeader(){ //Függvényt definiálunk
         }
      
     }
+    function generateForm(formD){  //Függvényt definiálunk
+        const form = document.createElement('form') //Létrehozom a formot
+        document.body.appendChild(form) //Hozzá appendelem a body-hoz
+        form.id = "form" //A form id-ja form
+        form.action = "#" //A form action-je #
+    
+        for(let i = 0; i < formD.length; i++ ){  //A form összes elemén végig megyünk egy ciklussal
+            const div =  document.createElement('div') //Létrehozok egy div elemet
+            form.appendChild(div) //Hozzá appendelem a formhoz
+            
+            const label = document.createElement('label') //Létrehozok egy label elemet
+            div.appendChild(label) //Hozzá appendelem a div-hez
+    
+            label.htmlFor = formL[i].id //htmlFor egyenlő lesz a form-idjával
+            label.innerHTML = formL[i].label //A label innerHTML értéke a form1 objektumban eltárolt label lesz
+    
+            const br = document.createElement('br') //Sortörést hozok létre
+            div.appendChild(br) //Hozzá appendelem a div-hez
+    
+            const input = document.createElement('input') //Inputot hozok létre
+            div.appendChild(input)//Hozzá appendelem a div-hez
+            input.type = "text" //Input tipusa text
+            input.id = formL[i].id //Input id megegyezik az objektumban eltárolt id-val
+            input.name = formL[i].id //Input name megegyezik az objektumban eltárolt id-val
+    
+            const br2 = document.createElement('br') //Sortörést hozok létre
+            div.appendChild(br2) //Hozzá appendelem a div-hez
+    
+            const span = document.createElement('span') //Spant hozok létre
+            div.appendChild(span) //Hozzá appendelem a div-hez
+            span.className = "error" //A span classa az error lesz
+             
+            const br3 = document.createElement('br') //Sortörést hozok létre
+            div.appendChild(br3) //Hozzá appendelem a div-hez
+            
+        }
+    
+        const button = document.createElement('button') //Létrehozok egy gombot
+        button.innerHTML = "Hozzáadás" //A gomb értéke a "Hozzáadás" szöveg lesz
+        form.appendChild(button) //Hozzá appendelem a formhoz a gombot
+    }
 
+    
 const form = document.getElementById("form") //Lekérem a html form id-ját
 form.addEventListener('submit', function(e){//Eseménykezelőt adok a form-hoz
     e.preventDefault()//Megakadályozom hogy a böngésző alapártelmezetten lefusson
